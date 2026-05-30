@@ -4,29 +4,45 @@
 Perform the operation based on the user's input and print the result.
 Example: If a user inputs 10, 5, and +, your program should display 10 + 5 = 15.'''
 
-try:
- num1 = float(input("Enter a first number: "))
- num2 = float(input("Enter a  second number: "))
- operation = input(" Enter a mathematical operation: (addition(+), subtraction(-), multiplication(*), or division(/): ")
- print(" ")
-except ValueError:
- print("Invalid number, please try again: ")
- 
-# Addition
-if operation == "+":
-    print(f"Addition of {num1} and {num2} is: {num1+num2}")
+def get_valid_input():
+    """Get and validate user input for two numbers and an operation."""
+    while True:
+        try:
+            num1 = float(input("Enter the first number: "))
+            num2 = float(input("Enter the second number: "))
+            operation = input("Enter a mathematical operation (+, -, *, /): ").strip()
+            
+            # Validate operation
+            if operation not in ["+", "-", "*", "/"]:
+                print("Invalid operation. Please enter +, -, *, or /")
+                continue
+                
+            return num1, num2, operation
+            
+        except ValueError:
+            print("Invalid input. Please enter valid numbers.")
 
-# Subtraction    
-elif operation == "-":
-    print(f"Subtraction of {num1} and {num2} is: {num1-num2}")   
+def calculate(num1, num2, operation):
+    """Perform the calculation based on the operation."""
+    if operation == "+":
+        return num1 + num2
+    elif operation == "-":
+        return num1 - num2
+    elif operation == "*":
+        return num1 * num2
+    elif operation == "/":
+        if num2 == 0:
+            print("Error: Cannot divide by zero")
+            return None
+        return num1 / num2
 
-# Multiplication    
-elif operation == "*":
-    print(f"Multiplication of {num1} and {num2} is: {num1*num2}")   
-       
-# Division    
-elif operation == "/":
-    print(f"Division of {num1} and {num2} is: {num1/num2}")  
+def main():
+    """Main program logic."""
+    num1, num2, operation = get_valid_input()
+    result = calculate(num1, num2, operation)
     
-else:
-    pass           
+    if result is not None:
+        print(f"\n{num1} {operation} {num2} = {result}")
+
+if __name__ == "__main__":
+    main()
